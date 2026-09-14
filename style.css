@@ -1133,6 +1133,13 @@ textarea{
     object-fit:contain;
     object-position:center;
     transform:translate(-5px,-10px);
+    animation:invitationFloatMobile 5.5s ease-in-out infinite;
+    filter:drop-shadow(0 18px 32px rgba(63,56,50,.08));
+  }
+
+  @keyframes invitationFloatMobile{
+    0%,100%{transform:translate(-5px,-10px) scale(1)}
+    50%{transform:translate(-5px,-14px) scale(1.008)}
   }
 
   /* Centered directly over the invitation photo */
@@ -1375,13 +1382,6 @@ textarea{
     background-size:92% 92%;
   }
 
-  .intro-png{
-    width:100vw;
-    max-width:none;
-    max-height:68svh;
-    transform:translate(-3px,-8px);
-  }
-
   .open-invitation{
     left:50%;
     bottom:19svh;
@@ -1475,17 +1475,7 @@ textarea{
 }
 
 .intro-visual{
-  background-size:94% 94%;
-}
-
-.intro-png{
-  animation:invitationFloat 5.5s ease-in-out infinite;
-  filter:drop-shadow(0 18px 32px rgba(63,56,50,.08));
-}
-
-@keyframes invitationFloat{
-  0%,100%{transform:translate(-5px,-10px) scale(1)}
-  50%{transform:translate(-5px,-14px) scale(1.008)}
+  background-size:100% 100%;
 }
 
 /* Rectangular luxury open button */
@@ -1898,27 +1888,19 @@ body.experience-started .countdown-section{
 
     overflow:hidden;
   }
-
-  .intro-png{
-    width:min(72vw,680px);
-    height:auto;
-
-    max-width:none;
-    max-height:76svh;
-
-    object-fit:contain;
-    object-position:center;
-
-    margin:0;
-
-    transform:translateY(-18px);
-
-    filter:
-      drop-shadow(0 20px 38px rgba(81,64,62,.10));
-
-    animation:introArtworkFloat 6s ease-in-out infinite;
-  }
-
+.intro-png{
+  width:min(50vw,500px);
+  height:auto;
+  max-width:none;
+  max-height:68svh;
+  object-fit:contain;
+  object-position:center;
+  margin:0;
+  transform:translateY(-18px);
+  filter:
+    drop-shadow(0 20px 38px rgba(81,64,62,.10));
+  animation:introArtworkFloat 6s ease-in-out infinite;
+}
   @keyframes introArtworkFloat{
     0%,100%{
       transform:translateY(-18px);
@@ -1944,31 +1926,10 @@ body.experience-started .countdown-section{
   width:100%;
   margin:0;
   text-align:center;
-
   font-family:"GL Kupiura",serif;
   font-size:22px;
   font-weight:500;
   line-height:1.2;
   letter-spacing:.02em;
-
   color:var(--ink);
-}
-
-/* Desktop */
-@media(min-width:641px){
-  .invitation-title,
-  .wedding-date,
-  .countdown-title{
-    font-size:40px;
-  }
-}
-
-/* Mobile */
-@media(max-width:640px){
-  .invitation-title,
-  .wedding-date,
-  .countdown-title{
-    font-size:40px;
-    line-height:1.2;
-  }
 }
