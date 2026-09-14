@@ -1124,18 +1124,20 @@ textarea{
     background-size:94% 94%;
   }
 
-  .intro-png{
-    width:102vw;
-    height:auto;
-    max-width:none;
-    max-height:70svh;
-    margin:0;
-    object-fit:contain;
-    object-position:center;
-    transform:translate(-5px,-10px);
-    animation:invitationFloatMobile 5.5s ease-in-out infinite;
-    filter:drop-shadow(0 18px 32px rgba(63,56,50,.08));
-  }
+ .intro-png{
+  width:105vw;
+  height:auto;
+  max-width:none;
+  max-height:70svh;
+  margin:0;
+  object-fit:contain;
+  object-position:center;
+
+  
+
+  animation:invitationFloatMobile 5.5s ease-in-out infinite;
+  filter:drop-shadow(0 18px 32px rgba(63,56,50,.08));
+}
 
   @keyframes invitationFloatMobile{
     0%,100%{transform:translate(-5px,-10px) scale(1)}
@@ -1400,22 +1402,7 @@ textarea{
    REDUCED MOTION
    ========================================================= */
 
-@media(prefers-reduced-motion:reduce){
 
-  html{scroll-behavior:auto!important}
-
-  *,
-  *::before,
-  *::after{
-    animation:none!important;
-    transition:none!important;
-  }
-
-  .reveal{
-    opacity:1;
-    transform:none;
-  }
-}
 
 
 /* =========================================================
@@ -1475,7 +1462,7 @@ textarea{
 }
 
 .intro-visual{
-  background-size:100% 100%;
+  background-size:107% 102%;
 }
 
 /* Rectangular luxury open button */
@@ -1724,13 +1711,8 @@ textarea{
   }
 }
 
-@media(prefers-reduced-motion:reduce){
-  .intro-png,
-  .open-invitation,
-  .music-toggle.playing{
-    animation:none!important;
-  }
-}
+
+
 
 
 /* =========================================================
@@ -1888,18 +1870,7 @@ body.experience-started .countdown-section{
 
     overflow:hidden;
   }
-.intro-png{
-  width:min(50vw,500px);
-  height:auto;
-  max-width:none;
-  max-height:68svh;
-  object-fit:contain;
-  object-position:center;
-  margin:0;
-  transform:translateY(-18px);
-  filter:
-    drop-shadow(0 20px 38px rgba(81,64,62,.10));
-  animation:introArtworkFloat 6s ease-in-out infinite;
+
 }
   @keyframes introArtworkFloat{
     0%,100%{
@@ -1914,7 +1885,7 @@ body.experience-started .countdown-section{
   .open-invitation{
     bottom:9svh;
   }
-}
+
 /* =========================================================
    WEDDING HEADER / DATE / COUNTDOWN — SAME SIZE
    ========================================================= */
@@ -1932,4 +1903,77 @@ body.experience-started .countdown-section{
   line-height:1.2;
   letter-spacing:.02em;
   color:var(--ink);
+}
+
+
+/* =========================================================
+   MOBILE FULL-BLEED — NO EMPTY SIDE GAPS
+   Countdown and all following sections reach both screen edges
+   ========================================================= */
+@media(max-width:640px){
+  html, body{
+    width:100%;
+    max-width:100%;
+    margin:0;
+    padding:0;
+    overflow-x:hidden;
+  }
+
+  main,
+  main > section,
+  .countdown-section,
+  .letter-section,
+  .ornament-gallery,
+  .details-section,
+  .program-section,
+  .rsvp-section,
+  .final-section,
+  .site-footer{
+    width:100%;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+
+  /* Countdown fills the entire phone width */
+  .countdown-section{
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .countdown{
+    width:100%;
+    max-width:none;
+  }
+
+  /* Remove side gutters from sections after countdown */
+  .letter-section,
+  .ornament-gallery,
+  .details-section,
+  .program-section,
+  .rsvp-section,
+  .final-section{
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+  }
+
+  /* Keep content readable while backgrounds stay edge-to-edge */
+  .letter-section > *,
+  .details-section > *,
+  .program-section > *,
+  .rsvp-section > *,
+  .final-section > *{
+    box-sizing:border-box;
+  }
+
+  /* Images touch the phone edges */
+  .ornament-gallery img,
+  .final-section img,
+  .photo-bg img{
+    max-width:none;
+  }
 }
