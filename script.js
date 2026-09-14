@@ -136,6 +136,7 @@ function playMusic() {
 openInvitation?.addEventListener(
   "click",
   () => {
+
     document.body.classList.remove(
       "intro-locked"
     );
@@ -162,6 +163,7 @@ openInvitation?.addEventListener(
 musicToggle?.addEventListener(
   "click",
   (event) => {
+
     event.stopPropagation();
 
     if (!bgMusic) {
@@ -195,12 +197,17 @@ updateMusicButton();
    COUNTDOWN
 ========================================================= */
 
+// ANRI & MARIKA
+// 22 September 2026
+// 13:00 — Tbilisi / Georgia time
+
 const weddingDate = new Date(
-  "2026-09-06T15:00:00+04:00"
+  "2026-09-22T13:00:00+04:00"
 ).getTime();
 
 
 function updateCountdown() {
+
   const distance =
     weddingDate - Date.now();
 
@@ -222,6 +229,7 @@ function updateCountdown() {
   }
 
   if (distance <= 0) {
+
     elements.forEach((element) => {
       element.textContent = "00";
     });
@@ -254,9 +262,12 @@ function updateCountdown() {
 
   elements.forEach(
     (element, index) => {
-      element.textContent = String(
-        values[index]
-      ).padStart(2, "0");
+
+      element.textContent =
+        String(
+          values[index]
+        ).padStart(2, "0");
+
     }
   );
 }
@@ -275,7 +286,8 @@ setInterval(
 ========================================================= */
 
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxXYVPm2JeowkOVBnLiHsq4eCs6AuZb0ghiZkms2HDEyF4a23irpNkZaRhywe2cVM2O/exec";
+  "https://script.google.com/macros/s/AKfycbxu2v4SGMLoQO_quDrp2W1g_L9_xts2zgSuqr4Z7295TBGB4xn0uA60BRENJ0xY22Yt8A/exec";
+
 
 const rsvpForm =
   document.querySelector(".rsvp-form");
@@ -287,6 +299,7 @@ const rsvpButton =
 
 
 function resetRsvpButton() {
+
   if (!rsvpButton) {
     return;
   }
@@ -308,31 +321,40 @@ function resetRsvpButton() {
 rsvpForm?.addEventListener(
   "submit",
   async (event) => {
+
     event.preventDefault();
 
     if (!rsvpForm || !rsvpButton) {
       return;
     }
 
+
+    /* -----------------------------------------
+       GET FORM DATA
+    ----------------------------------------- */
+
     const formData =
       new FormData(rsvpForm);
+
 
     const name =
       String(
         formData.get("name") || ""
       ).trim();
 
+
     const attendance =
       String(
         formData.get("attendance") || ""
       ).trim();
 
-    const message =
-      String(
-        formData.get("message") || ""
-      ).trim();
+
+    /* -----------------------------------------
+       VALIDATION — NAME
+    ----------------------------------------- */
 
     if (!name) {
+
       rsvpButton.textContent =
         currentLang === "ka"
           ? "შეავსეთ სახელი"
@@ -354,7 +376,13 @@ rsvpForm?.addEventListener(
       return;
     }
 
+
+    /* -----------------------------------------
+       VALIDATION — ATTENDANCE
+    ----------------------------------------- */
+
     if (!attendance) {
+
       rsvpButton.textContent =
         currentLang === "ka"
           ? "აირჩიეთ დასწრება"
@@ -376,6 +404,11 @@ rsvpForm?.addEventListener(
       return;
     }
 
+
+    /* -----------------------------------------
+       SEND DATA TO GOOGLE SHEETS
+    ----------------------------------------- */
+
     const payload =
       new URLSearchParams();
 
@@ -389,15 +422,10 @@ rsvpForm?.addEventListener(
       attendance
     );
 
-    payload.append(
-      "message",
-      message
-    );
 
-    payload.append(
-      "language",
-      currentLang
-    );
+    /* -----------------------------------------
+       BUTTON — SENDING
+    ----------------------------------------- */
 
     rsvpButton.disabled = true;
 
@@ -411,56 +439,84 @@ rsvpForm?.addEventListener(
       "error"
     );
 
+
+    /* -----------------------------------------
+       SEND REQUEST
+    ----------------------------------------- */
+
     try {
+
       await fetch(
         GOOGLE_SCRIPT_URL,
         {
-          method:"POST",
-          mode:"no-cors",
-          headers:{
+          method: "POST",
+
+          mode: "no-cors",
+
+          headers: {
             "Content-Type":
               "application/x-www-form-urlencoded;charset=UTF-8"
           },
-          body:payload.toString()
+
+          body: payload.toString()
         }
       );
+
+
+      /* -----------------------------------------
+         SUCCESS
+      ----------------------------------------- */
 
       rsvpButton.textContent =
         currentLang === "ka"
           ? "გაგზავნილია"
           : "Sent";
 
+
       rsvpButton.classList.add(
         "sent"
       );
 
+
       rsvpForm.reset();
+
 
       setTimeout(
         resetRsvpButton,
         2200
       );
 
+
     } catch (error) {
+
       console.error(
         "RSVP submission error:",
         error
       );
+
+
+      /* -----------------------------------------
+         ERROR
+      ----------------------------------------- */
 
       rsvpButton.textContent =
         currentLang === "ka"
           ? "შეცდომა — სცადეთ თავიდან"
           : "Error — try again";
 
+
       rsvpButton.classList.add(
         "error"
       );
+
 
       setTimeout(
         resetRsvpButton,
         2500
       );
+
     }
+
   }
 );
 
@@ -487,10 +543,13 @@ const revealItems =
 if (
   "IntersectionObserver" in window
 ) {
+
   const observer =
     new IntersectionObserver(
       (entries) => {
+
         entries.forEach((entry) => {
+
           if (!entry.isIntersecting) {
             return;
           }
@@ -502,10 +561,13 @@ if (
           observer.unobserve(
             entry.target
           );
+
         });
+
       },
       {
-        threshold:0.12,
+        threshold: 0.12,
+
         rootMargin:
           "0px 0px -40px 0px"
       }
@@ -514,7 +576,10 @@ if (
 
   revealItems.forEach(
     (item, index) => {
-      item.classList.add("reveal");
+
+      item.classList.add(
+        "reveal"
+      );
 
       item.style.transitionDelay =
         `${Math.min(
@@ -523,16 +588,22 @@ if (
         ) * 0.08}s`;
 
       observer.observe(item);
+
     }
   );
 
+
 } else {
+
   revealItems.forEach((item) => {
+
     item.classList.add(
       "reveal",
       "show"
     );
+
   });
+
 }
 
 
@@ -541,6 +612,7 @@ if (
 ========================================================= */
 
 function updateHeaderState() {
+
   if (!header) {
     return;
   }
@@ -553,7 +625,9 @@ function updateHeaderState() {
     return;
   }
 
-  header.classList.add("visible");
+  header.classList.add(
+    "visible"
+  );
 }
 
 
@@ -561,7 +635,7 @@ window.addEventListener(
   "scroll",
   updateHeaderState,
   {
-    passive:true
+    passive: true
   }
 );
 
@@ -577,11 +651,14 @@ const internalLinks =
 
 
 internalLinks.forEach((link) => {
+
   link.addEventListener(
     "click",
     (event) => {
+
       const targetId =
         link.getAttribute("href");
+
 
       if (
         !targetId ||
@@ -590,23 +667,29 @@ internalLinks.forEach((link) => {
         return;
       }
 
+
       const target =
         document.querySelector(
           targetId
         );
 
+
       if (!target) {
         return;
       }
 
+
       event.preventDefault();
 
+
       target.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
+        behavior: "smooth",
+        block: "start"
       });
+
     }
   );
+
 });
 
 
@@ -617,13 +700,16 @@ internalLinks.forEach((link) => {
 window.addEventListener(
   "pageshow",
   () => {
+
     updateMusicButton();
+
 
     if (
       !document.body.classList.contains(
         "intro-locked"
       )
     ) {
+
       header?.classList.add(
         "visible"
       );
@@ -631,6 +717,8 @@ window.addEventListener(
       musicToggle?.classList.add(
         "visible"
       );
+
     }
+
   }
 );
